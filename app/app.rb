@@ -10,7 +10,7 @@ class BookmarkManager < Sinatra::Base
 
   helpers do
     def current_user
-      User.get(session[:user_id])
+      @current_user ||= User.get(session[:user_id]) if session[:user_id]
     end
   end
 
@@ -21,6 +21,7 @@ class BookmarkManager < Sinatra::Base
 
   get '/links' do
     @links = Link.all
+    #flash
     erb :'links/index'
   end
 
@@ -56,6 +57,7 @@ class BookmarkManager < Sinatra::Base
       password: params[:password],
       password_confirmation: params[:password_confirmation])
     if @user.save
+      
       session[:user_id] = @user.id
       redirect to('/links')
     else
