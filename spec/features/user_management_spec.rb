@@ -36,7 +36,7 @@ def sign_up(user)
 
   scenario 'I cannot sign up with an existing email' do
     user = create(:user, email: 'alice@example.com')
-    expect { sign_up_as(user) }.to change(User, :count).by(0)
+    expect { sign_up(user) }.to change(User, :count).by(0)
     expect(page).to have_content('Email is already taken')
   end
 
