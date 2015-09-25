@@ -46,24 +46,15 @@ end
 feature 'User sign in' do
 
   def sign_in(user)
-    visit '/sessions/new'
-    fill_in :email, with: user.email
+    fill_in :email,    with: user.email
     fill_in :password, with: user.password
   end
 
-  let(:user) do
-    User.create(email: 'user@example.com',
-                password: 'secret1234',
-                password_confirmation: 'secret1234')
-  end
-
   scenario 'with correct credentials' do
-    user = create(:user, email: 'alice@example.com')
-    sign_in(user)
+    user = create(:user)
+    sign_in user
     expect(page).to have_content "Welcome, #{user.email}"
   end
 
 
-
 end
-
