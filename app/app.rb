@@ -6,6 +6,7 @@ class BookmarkManager < Sinatra::Base
 
   use Rack::MethodOverride
   enable :sessions
+  use Rack::MethodOverride #needed for delete
   register Sinatra::Flash
   set :session_secret, 'super secret'
 
@@ -14,7 +15,6 @@ class BookmarkManager < Sinatra::Base
       @current_user ||= User.get(session[:user_id]) if session[:user_id]
     end
   end
-
 
   get '/' do
     erb :homepage
